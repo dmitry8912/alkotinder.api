@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\Storage;
 class PersonalSettingsController extends Controller
 {
     public function getSettings(){
-        return UsersRepository::current()->with('settings')->get();
+        $user = UsersRepository::current()->toArray();
+        $user['settings'] = UsersRepository::personalSettings();
+        return response($user,200);
     }
 
     public function setSettings(Request $request){
